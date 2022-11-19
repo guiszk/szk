@@ -105,6 +105,6 @@ fn server_error(req: &Request) -> String {
 #[launch]
 fn rocket() -> _ {
     rocket::build()
-    .mount("/", routes![index, retrieve, upload, sayhi, display, delete])
+    .mount("/", routes![index, retrieve, upload, sayhi, display])
     .register("/", catchers![not_found, server_error])
 }
