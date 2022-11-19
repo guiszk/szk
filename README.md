@@ -18,15 +18,11 @@ GET contents:
 
 `curl /<id>`
 
-DELETE:
-
-`curl -X DELETE /<id>`
-
 View in browser:
 
 `/view/<id>`
 
-## features
+## Features
 Syntax highlighting in /view mode.
 
 ## About

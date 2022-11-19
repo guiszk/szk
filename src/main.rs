@@ -7,10 +7,11 @@ use rocket::Request;
 use rocket::response::content;
 use std::fs;
 
+// main page
 #[get("/")]
 fn index() -> &'static str {
     "-> szk
-rust-based server for text storage.
+rust-based server for text (and file) storage.
 
 -> usage
 POST a string:
@@ -22,9 +23,6 @@ POST a file:
 
 GET contents:
     curl /<id>
-
-DELETE:
-    curl -X DELETE /<id>
 
 View in browser:
     /view/<id>
@@ -39,15 +37,16 @@ View in browser:
     "
 }
 
+// say hi!
 #[get("/hello/<name>")]
 fn sayhi(name: &str) -> String {
     format!("hi, {}!", name)
 }
 
+// view contents
 #[get("/view/<id>")]
 async fn display(id: PasteId<'_>) -> content::RawHtml<String> {
     let cont = fs::read_to_string(id.file_path()).expect("LogRocket: Should have been able to read the file");
-    //let cont = File::open(id.file_path()).await.ok().read_to_string()
     let a = format!("
     <script src=\"https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js\"></script>
     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css\">
@@ -63,6 +62,7 @@ async fn display(id: PasteId<'_>) -> content::RawHtml<String> {
     content::RawHtml(a)
 }
 
+// view contents
 #[get("/<id>")]
 async fn retrieve(id: PasteId<'_>) -> Option<File> {
     File::open(id.file_path()).await.ok()
@@ -74,6 +74,7 @@ use rocket::http::uri::Absolute;
 const ID_LENGTH: usize = 4;
 const HOST: Absolute<'static> = uri!("https://szk.onrender.com");
 
+// post contents
 #[post("/", data = "<paste>")]
 async fn upload(paste: Data<'_>) -> std::io::Result<String> {
     let id = PasteId::new(ID_LENGTH);
@@ -81,6 +82,15 @@ async fn upload(paste: Data<'_>) -> std::io::Result<String> {
     Ok(uri!(HOST, retrieve(id)).to_string()+"\n")
 }
 
+//delete contents
+// better to not allow deletion for now
+/* #[delete("/<id>")]
+async fn delete(id: PasteId<'_>) -> String {
+    fs::remove_file(id.file_path()).ok();
+    format!("Deleted {}\n", id.file_path().display())
+} */
+
+// exceptions
 #[catch(404)]
 fn not_found(req: &Request) -> String {
     format!("404: '{}' is not a valid path.", req.uri())
@@ -91,9 +101,10 @@ fn server_error(req: &Request) -> String {
     format!("whoops! internal error! {}", req.uri())
 }
 
+// run
 #[launch]
 fn rocket() -> _ {
     rocket::build()
-    .mount("/", routes![index, retrieve, upload, sayhi, display])
+    .mount("/", routes![index, retrieve, upload, sayhi, display, delete])
     .register("/", catchers![not_found, server_error])
 }
