@@ -10,7 +10,7 @@ use std::fs;
 #[get("/")]
 fn index() -> &'static str {
     "-> szk
-Rust-based server for text storage.
+rust-based server for text storage.
 
 -> usage
 POST a string:
@@ -29,9 +29,13 @@ DELETE:
 View in browser:
     /view/<id>
 
+-> features
+    syntax highlighting in /view mode
+
 -> about
-    tutorial: https://rocket.rs/v0.5-rc/guide/pastebin-tutorial/
     source: https://github.com/guiszk/szk
+    tutorial: https://rocket.rs/v0.5-rc/guide/pastebin-tutorial
+    github: https://github.com/guiszk
     "
 }
 

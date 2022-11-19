@@ -26,6 +26,9 @@ View in browser:
 
 `/view/<id>`
 
+## features
+Syntax highlighting in /view mode.
+
 ## About
 Using [Rocket](https://rocket.rs) as framework.
 
