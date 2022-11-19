@@ -14,11 +14,11 @@ Rust-based server for text storage.
 
 -> usage
 POST a string:
-    curl --data-binary 'hi there!' http://127.0.0.1:8000
-    echo \"hi there!\" | curl --data-binary @- http://127.0.0.1:8000
+    curl --data-binary 'hi there!' https://szk.onrender.com
+    echo \"hi there!\" | curl --data-binary @- https://szk.onrender.com
 
 POST a file:
-    cat file.txt | curl --data-binary @- http://127.0.0.1:8000
+    cat file.txt | curl --data-binary @- https://szk.onrender.com
 
 GET contents:
     curl /<id>
@@ -68,7 +68,7 @@ use rocket::data::{Data, ToByteUnit};
 use rocket::http::uri::Absolute;
 
 const ID_LENGTH: usize = 4;
-const HOST: Absolute<'static> = uri!("http://127.0.0.1:8000");
+const HOST: Absolute<'static> = uri!("https://szk.onrender.com");
 
 #[post("/", data = "<paste>")]
 async fn upload(paste: Data<'_>) -> std::io::Result<String> {
