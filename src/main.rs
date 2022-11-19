@@ -11,21 +11,21 @@ use std::fs;
 #[get("/")]
 fn index() -> &'static str {
     "-> szk
-rust-based server for text (and file) storage.
+    rust-based server for text (and file) storage.
 
 -> usage
-POST a string:
-    curl --data-binary 'hi there!' https://szk.onrender.com
-    echo \"hi there!\" | curl --data-binary @- https://szk.onrender.com
+    POST a string:
+        curl --data-binary 'hi there!' https://szk.onrender.com
+        echo \"hi there!\" | curl --data-binary @- https://szk.onrender.com
 
-POST a file:
-    cat file.txt | curl --data-binary @- https://szk.onrender.com
+    POST a file:
+        cat file.txt | curl --data-binary @- https://szk.onrender.com
 
-GET contents:
-    curl /<id>
+    GET contents:
+        curl https://szk.onrender.com/<id>
 
-View in browser:
-    /view/<id>
+    View in browser:
+        https://szk.onrender.com/view/<id>
 
 -> features
     syntax highlighting in /view mode
@@ -46,7 +46,7 @@ fn sayhi(name: &str) -> String {
 // view contents
 #[get("/view/<id>")]
 async fn display(id: PasteId<'_>) -> content::RawHtml<String> {
-    let cont = fs::read_to_string(id.file_path()).expect("LogRocket: Should have been able to read the file");
+    let cont = fs::read_to_string(id.file_path()).expect("Should have been able to read the file");
     let a = format!("
     <script src=\"https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js\"></script>
     <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-dark.min.css\">
