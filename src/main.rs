@@ -30,6 +30,22 @@ fn index() -> &'static str {
 -> features
     syntax highlighting in /view mode
 
+-> bashrc/zshrc shortcut
+     szk () {
+     if [ $# -ne 1 ]; then
+         echo \"szk <text/file>\"
+         return 1
+     fi
+     if [ -f $1  ]; then
+         cat $1 | curl --data-binary @- https://szk.onrender.com
+     else
+         echo $1 | curl --data-binary @- https://szk.onrender.com
+     fi
+    }
+
+-> notes
+    works better with text/code files, mp3s and images.
+
 -> about
     source: https://github.com/guiszk/szk
     tutorial: https://rocket.rs/v0.5-rc/guide/pastebin-tutorial
