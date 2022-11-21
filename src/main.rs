@@ -41,7 +41,6 @@ fn index() -> &'static str {
      else
          echo $1 | curl --data-binary @- https://szk.onrender.com
      fi
-    }
 
 -> notes
     works better with text/code files, mp3s and images.
